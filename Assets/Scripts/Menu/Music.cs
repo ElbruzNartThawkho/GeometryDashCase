@@ -11,6 +11,6 @@ public class Music : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(instance);//muziðin sahne geçiþinden sonra yok olmamasýný saðlar
     }
 }

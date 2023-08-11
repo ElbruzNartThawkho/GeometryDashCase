@@ -16,16 +16,6 @@ public class AirController : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerInput playerInput;
 
-    private void OnEnable()
-    {
-        flySprite.gameObject.SetActive(true);
-        flyParticle.SetActive(true);
-    }
-    private void OnDisable()
-    {
-        flySprite.gameObject.SetActive(false);
-        flyParticle.SetActive(false);
-    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +31,9 @@ public class AirController : MonoBehaviour
     {
         MoveForward();
     }
+    /// <summary>
+    /// yükselip düþme durumuna göre dönme rotasyonunu akýcý olarak ayarlar
+    /// </summary>
     private void UpdateRotation()
     {
         float targetRotation = 0f;
@@ -57,6 +50,9 @@ public class AirController : MonoBehaviour
         Quaternion targetQuaternion = Quaternion.Euler(0, 0, targetRotation);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetQuaternion, Time.deltaTime * rotationSpeed);
     }
+    /// <summary>
+    /// fly tuþuna basýlý tutulduðunda yukarý doðru uçmasýný saðlar
+    /// </summary>
     private void Fly()
     {
         if (playerInput.actions["Fly"].IsPressed())
@@ -64,9 +60,29 @@ public class AirController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, flyForce);
         }
     }
+    /// <summary>
+    /// flySpeed deðerine göre ileri doðru hareket eder
+    /// </summary>
     private void MoveForward()
     {
-        Vector2 movement = new(flySpeed, rb.velocity.y);
-        rb.velocity = movement;
+        rb.velocity = new(flySpeed, rb.velocity.y);
+    }
+    /// <summary>
+    /// bileþen etkinleþtirildiðinde çalýþýr
+    /// sprite ve particlelarýný aktif yapar
+    /// </summary>
+    private void OnEnable()
+    {
+        flySprite.gameObject.SetActive(true);
+        flyParticle.SetActive(true);
+    }
+    /// <summary>
+    /// bileþen devre dýþý býrakýldýðýnda çalýþýr
+    /// sprite ve particlelarýn aktifliðini kapatýr
+    /// </summary>
+    private void OnDisable()
+    {
+        flySprite.gameObject.SetActive(false);
+        flyParticle.SetActive(false);
     }
 }

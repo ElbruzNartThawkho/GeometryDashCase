@@ -16,20 +16,26 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
+    /// <summary>
+    /// level bittiðinde bitiþ ekranýný açar
+    /// </summary>
     public void Finish()
     {
         finishScreen.SetActive(true);
     }
-    public void ReloadScene(bool landOrAir)
+    /// <summary>
+    /// bölümün baþýna atar ve kontrol ayarlarýný yapar
+    /// </summary>
+    /// <param name="landOrAir">kara kontrolleri varsa true hava kontrolleri varsa false</param>
+    public void RetryLvl(bool landOrAir)
     {
         player.GetComponent<LandController>().enabled = landOrAir;
         player.GetComponent<AirController>().enabled = !landOrAir;
-        StartCoroutine(ReloadCoroutine());
+        Invoke(nameof(ReloadCoroutine), reloadSceneTime);
     }
 
-    private IEnumerator ReloadCoroutine()
+    private void ReloadCoroutine()
     {
-        yield return new WaitForSeconds(reloadSceneTime);
         player.transform.position = startPosition.position;
         player.transform.rotation = startPosition.rotation;
         player.SetActive(true);

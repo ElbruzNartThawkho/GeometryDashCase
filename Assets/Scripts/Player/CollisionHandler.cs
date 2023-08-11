@@ -25,7 +25,7 @@ public class CollisionHandler : MonoBehaviour
         {
             Instantiate(dyingParticle, transform.position, dyingParticle.transform.rotation);
             gameObject.SetActive(false);
-            GameManager.instance.ReloadScene(true);
+            GameManager.instance.RetryLvl(true);
         }
         if (collision.gameObject.CompareTag(groundTag))
         {
